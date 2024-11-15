@@ -7,7 +7,7 @@ from adafruit_display_shapes.circle import Circle
 from adafruit_display_shapes.rect import Rect
 from adafruit_display_shapes.polygon import Polygon
 from adafruit_display_shapes.triangle import Triangle  # Import the missing Triangle class
-
+import math
 # Constants
 PUMPKIN_CENTER_X = 120
 PUMPKIN_CENTER_Y = 100
@@ -75,10 +75,9 @@ main_group.append(stem12)
 
 feathers = []
 for i in range(5):
-    val = random.randint(1, 4)
-    if val == 2 or val == 3:
-        cool = Rect(105 + (i * 9), 55, width=8, height=25, fill=STEM)
-        feathers.append(cool)
+
+    cool = Rect(105 + (i * 9), 55, width=8, height=25, fill=STEM)
+    feathers.append(cool)
     feather = Rect(105 + (i * 9), 55, width=8, height=25, fill=MOON)
     feathers.append(feather)
 for x in feathers:
@@ -96,16 +95,19 @@ main_group.append(shadow1)
 
 count = 0
 direction = 1
-while True:
-
-    
+while True:    
     pumpkin_offset = 2 *  random.randint(0, 10) 
     for thing in pumpkin:
         thing.y = 80 + pumpkin_offset
- 
+        thing.x = 90+ pumpkin_offset
+
+    for x in feathers:
+        for xs in feathers:
+            xs.y = 60 + (pumpkin_offset)
+            xs.x = ((60 + random.randint(15, xs.x-10)) % 170)
+            
     display.refresh()
-    time.sleep(0.05)
-    
+    time.sleep(0.05)   
     count += direction
     if count > 100 or count < 0:
         direction *= -1 
